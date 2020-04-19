@@ -1,0 +1,72 @@
+---
+title: "Parameterized Rmarkdown with Python and R"
+output: html_document
+params:
+  minimum: 
+    label: "Minimum:"
+    value: 100
+    input: slider
+    min: 0
+    max: 1000
+  givenpw:
+    input: password
+    label: "Enter a password"
+    value: "" 
+---
+
+This markdown demonstrates how one can use a Parameterized Markdown with Python and R.
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+########
+#Python Setup
+# ref: https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/ 
+
+#use library reticulate to enable python use within R
+library(reticulate)
+
+#option A - Use a file .Renviron  
+# in which you define the path to your python3 location
+# use this option if you want to deploy to Rstudio Connect
+
+#OR option B - Create virtual environment within your project
+# system("virtualenv -p python3 python-env")
+# system("source python-env/bin/activate")
+# system("pip3 install pandas")
+# reticulate::use_virtualenv(paste0(getwd(),"python-env"), required = TRUE)
+
+#show python config
+reticulate::py_config()
+
+########
+```
+
+# R show params
+Print the values of the params (parameters defined globally in this markdown)
+
+```{r show_param_r}
+print(params)
+```
+
+# Python show params
+Print the values of the params (parameters defined globally in this markdown)
+
+```{python show_param_py}
+print(r.params)
+
+```
+
+# Use Python Pandas
+An example how Python can directly be used within R Markdown
+```{python create_panda}
+#import a python library
+import pandas
+#define file
+file_name = "http://samplecsvs.s3.amazonaws.com/SalesJan2009.csv"
+#create and read file into panda
+df = pandas.read_csv(file_name)
+#print values
+print(df.head())
+```
