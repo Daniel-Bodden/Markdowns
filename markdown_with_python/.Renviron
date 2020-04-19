@@ -1,0 +1,2 @@
+#mac osx location - python3 installed with brew
+RETICULATE_PYTHON=/usr/local/bin/Python3
